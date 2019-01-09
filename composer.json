@@ -1,0 +1,16 @@
+{
+    "name": "cjcal/wutr-site-proto",
+    "description": "prototype dynamic news site for western university technology review",
+    "type": "project",
+    "license": "GNU3",
+    "authors": [
+        {
+            "name": "Caleb J Caldwell",
+            "email": "ccaldw2@uwo.ca"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "kreait/firebase-php": "4.18"
+    }
+}
