@@ -1,5 +1,5 @@
 <?php
-
+    require_once 'Article.php';
     require_once './vendor/autoload.php';
 
     use Kreait\Firebase\Factory;
@@ -8,6 +8,7 @@
     class Articles {
         protected $database;
         protected $dbname = 'Articles';
+
 
         public function __construct() {
             $acc = ServiceAccount::fromJsonFile(__DIR__ . '/secret/wutr-site-prototype-d5f52a03bc5f.json');
@@ -18,15 +19,25 @@
 
         public function getArticle($article = null) {
             if (empty($article) || !isset($article)){
-                return false;
+                return null;
             }
 
             if ($this -> database -> getReference($this -> dbname) -> getSnapshot() -> hasChild($article)){
-                return $this -> database -> getReference($this -> dbname) -> getChild($article) -> getValue();
+                $parent = $this -> database -> getReference($this -> dbname) -> getChild($article);
+                return $this->generate_article_object($parent);
             }
 
             else {
-                return false;
+                return null;
             }
+        }
+
+        private function generate_article_object($parent){
+            $title = $parent -> getChild('Title') -> getValue();
+            $image_link = $parent -> getChild('ImageLink') -> getValue();
+            $hypertext = $parent ->getChild('Hypertext') -> getValue();
+
+            $article = new Article($title, $image_link, $hypertext);
+            return $article;
         }
     }

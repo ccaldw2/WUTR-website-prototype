@@ -1,9 +1,9 @@
 <?php
-    require_once './vendor/autoload.php';
     require_once 'Articles.php';
 
     $articles = new Articles();
 
-    $test1 = $articles -> getArticle('Test 1');
-    $img = $articles->getArticle("Test 1");
-    echo "<img src=$img>";
+    $test = $articles -> getArticle('00001');
+    echo "<img src=$test->image_link>";
+    echo "<h1>$test->title</h1>";
+    echo "<p>$test->hypertext</p>";
