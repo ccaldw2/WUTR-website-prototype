@@ -32,12 +32,17 @@
             }
         }
 
+        public function get_articles_list(){
+
+        }
+
         private function generate_article_object($parent){
             $title = $parent -> getChild('Title') -> getValue();
+            $subtitle = $parent -> getChild('Subtitle') -> getValue();
             $image_link = $parent -> getChild('ImageLink') -> getValue();
             $hypertext = $parent ->getChild('Hypertext') -> getValue();
 
-            $article = new Article($title, $image_link, $hypertext);
+            $article = new Article($title, $subtitle, $image_link, $hypertext);
             return $article;
         }
     }
