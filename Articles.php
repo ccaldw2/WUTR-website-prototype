@@ -1,5 +1,4 @@
 <?php
-    require_once 'Article.php';
     require_once './vendor/autoload.php';
 
     use Kreait\Firebase\Factory;
@@ -17,14 +16,14 @@
             $this->database = $firebase->getDatabase();
         }
 
-        public function getArticle($article = null) {
+        public function fetch_article($article = null) {
             if (empty($article) || !isset($article)){
                 return null;
             }
 
             if ($this -> database -> getReference($this -> dbname) -> getSnapshot() -> hasChild($article)){
                 $parent = $this -> database -> getReference($this -> dbname) -> getChild($article);
-                return $this->generate_article_object($parent);
+                return $parent->getValue();
             }
 
             else {
@@ -32,17 +31,22 @@
             }
         }
 
-        public function get_articles_list(){
+        public function fetch_articles_list(){
+            $article_ids = $this -> database ->getReference($this -> dbname) -> getSnapshot();
+            $list = [];
+            return $article_ids;
+
 
         }
 
-        private function generate_article_object($parent){
-            $title = $parent -> getChild('Title') -> getValue();
-            $subtitle = $parent -> getChild('Subtitle') -> getValue();
-            $image_link = $parent -> getChild('ImageLink') -> getValue();
-            $hypertext = $parent ->getChild('Hypertext') -> getValue();
 
-            $article = new Article($title, $subtitle, $image_link, $hypertext);
+        private function generate_article_object($parent, $preview = false){
+            $article =[
+                'title' => $parent -> getChild('Title') -> getValue(),
+                'subtitle' => $parent -> getChild('Subtitle') -> getValue(),
+                'image_link' => $parent -> getChild('ImageLink') -> getValue(),
+                'hypertext' => $preview ? $parent ->getChild('Hypertext') -> getValue() : null
+            ];
             return $article;
         }
     }
