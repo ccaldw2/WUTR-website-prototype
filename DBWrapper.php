@@ -37,7 +37,23 @@
             } else {
                 return null;
             }
+        }
 
+        public function fetch_list_selected($start, $len) {
+            $shallow_list = $this->fetch_shallow_list();
+            $keys = array_keys($shallow_list);
+            return $this->database
+                ->getReference($this->dbname)
+                ->orderByKey()
+                ->startAt($keys[$start])
+                ->limitToFirst($len)
+                ->getValue();
+        }
+
+        public function fetch_shallow_list() {
+            $shallow_ids = $this-> database -> getReference($this->dbname) ->shallow() ->getSnapshot()->getValue();
+            ksort($shallow_ids);
+            return $shallow_ids;
         }
 
     }
