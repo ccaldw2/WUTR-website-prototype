@@ -17,3 +17,4 @@
     $prev = ($page - 1 > 0) ? $page - 1 : 1;
     $next = ($page + 1 < $last) ? $page + 1 : $last;
     echo "<a href=?page=1>first</a> | <a href=?page=$prev>prev</a> | <a href=?page=$next>next</a> | <a href=?page=$last>last</a>";
+    echo "<br/><a href='../index.php'>home</a>";
