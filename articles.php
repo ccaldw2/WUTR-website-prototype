@@ -1,9 +1,10 @@
 <?php
     require_once 'DBWrapper.php';
     $db = new DBWrapper();
-    $articles_per_page = 2;
 
+    $articles_per_page = $_GET['articles_per_page'];
     $page = $_GET['page'];
+
     $start = ($page-1) * $articles_per_page;
     $articles = $db -> fetch_list_selected($start, $articles_per_page);
     $len = sizeof($db->fetch_shallow_list());
